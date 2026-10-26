@@ -1,0 +1,219 @@
+/* ---------- The invitation opening ---------- */
+.intro { display: none; }
+html.has-invite .intro {
+  display: block;
+  position: fixed; inset: 0; z-index: 50;
+  overflow: hidden;
+  background: var(--burgundy-deep);
+  /* the edge that shows as the card slides up off the page */
+  box-shadow: 0 30px 60px rgba(30, 10, 15, .45);
+}
+
+.intro__stage {
+  position: absolute; inset: 0;
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+  cursor: pointer;
+}
+
+/* Inner cream card */
+.intro__card {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  padding: 4rem 1.5rem calc(3rem + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(110% 70% at 28% 12%, rgba(255, 253, 248, .75), transparent 62%),
+    linear-gradient(175deg, rgba(246, 241, 232, 0) 40%, rgba(222, 211, 194, .55) 100%),
+    var(--cream) var(--paper);
+  text-align: center;
+  cursor: default;
+}
+/* Dark in the X while the flaps are still close above it */
+.intro__card-shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(60% 45% at 50% 50%, rgba(60, 30, 34, .12), rgba(60, 30, 34, .5));
+}
+.intro__copy { position: relative; max-width: 22rem; }
+.intro__dear {
+  margin: 0 0 2.2rem;
+  font-style: italic; font-size: 1.25rem; color: var(--ink-soft);
+}
+.intro__headline { margin: 0; font-weight: 400; color: var(--burgundy-soft); line-height: 1; }
+.intro__caps {
+  display: block;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.15rem, 5.4vw, 1.5rem);
+  letter-spacing: 0.34em; padding-left: 0.34em;
+  text-transform: uppercase;
+}
+.intro__script {
+  display: block;
+  font-family: var(--script);
+  font-size: clamp(3rem, 15vw, 4.25rem);
+  line-height: 1.25;
+  margin: 0.1em 0 0.05em;
+  color: var(--burgundy);
+}
+.char { display: inline-block; white-space: pre; will-change: transform, filter, opacity; }
+.intro__to { margin: 2.4rem 0 0; font-style: italic; color: var(--ink-soft); line-height: 1.4; }
+.intro__names { display: block; margin: 0.3rem 0 0.4rem; font-family: var(--script); font-style: normal; font-size: 2.3rem; color: var(--burgundy); line-height: 1.3; }
+.intro__date { display: block; font-style: normal; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--navy); }
+.intro__continue { margin-top: 2rem; }
+
+/* Flaps */
+.flap {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  will-change: transform;
+}
+/* Front and back of each flap. The shadow lives here, not on .flap, because a
+   filter on the 3D element would flatten it and hide the back face. */
+.flap__side {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: drop-shadow(0 0 1.5px rgba(20, 4, 9, .75)) drop-shadow(0 6px 12px rgba(20, 4, 9, .45));
+}
+.flap__face, .flap__back { position: absolute; inset: 0; }
+.flap__face {
+  background: var(--burgundy) var(--emboss) center / cover no-repeat;
+}
+/* Each flap shows a slightly different light angle on the same embossed card */
+.flap--left .flap__face { filter: brightness(1.08); }
+.flap--right .flap__face { filter: brightness(1.0); }
+.flap--top .flap__face { filter: brightness(.86); }
+.flap--bottom .flap__face { filter: brightness(.8); }
+.flap__light {
+  position: absolute; inset: 0; opacity: 0;
+  background: linear-gradient(115deg, rgba(255, 196, 206, .85), rgba(214, 120, 140, .35) 55%, rgba(255, 220, 226, .2));
+  mix-blend-mode: screen;
+}
+/* Navy liner, seen as each flap turns past the vertical */
+.flap__back {
+  background:
+    repeating-linear-gradient(135deg, rgba(246, 241, 232, .07) 0 1px, transparent 1px 9px),
+    linear-gradient(160deg, #34446f, #1d2746),
+    var(--grain);
+  background-blend-mode: normal, soft-light, normal;
+}
+.flap--left .flap__side--back, .flap--right .flap__side--back { transform: rotateY(180deg); }
+.flap--top .flap__side--back, .flap--bottom .flap__side--back { transform: rotateX(180deg); }
+
+/* Flat colour fallback if the texture can't load */
+.intro--flat .flap__face {
+  background: linear-gradient(150deg, #6b1a2b, #551322), var(--burgundy);
+}
+
+.intro__sheen {
+  position: absolute; inset: -20%; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 220, 228, .14) 50%, transparent 65%);
+}
+
+/* "Tap to open" sits on the closed envelope */
+.intro__tap {
+  position: absolute; left: 50%; bottom: calc(9vh + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  width: max-content; max-width: 92vw; padding: 0.75rem 1.25rem;
+  background: none; border: 0; cursor: pointer;
+  color: var(--cream);
+  text-shadow: 0 1px 2px rgba(20, 5, 10, .6);
+}
+.intro__for { font-family: var(--script); font-size: 1.7rem; line-height: 1.2; white-space: nowrap; }
+.intro__tap-label {
+  font-size: 0.8rem; letter-spacing: 0.34em; text-transform: uppercase;
+  padding: 0.55rem 1.2rem 0.55rem 1.5rem;
+  white-space: nowrap;
+  border: 1px solid rgba(246, 241, 232, .55); border-radius: 999px;
+  background: rgba(70, 16, 28, .35);
+  backdrop-filter: blur(2px);
+}
+.intro.is-ready .intro__tap-label { animation: breathe 2.6s ease-in-out infinite; }
+.intro__tap:disabled { cursor: progress; }
+.intro__tap:disabled .intro__tap-label { border-style: dashed; opacity: .8; }
+@keyframes breathe { 50% { box-shadow: 0 0 0 6px rgba(246, 241, 232, .08); } }
+
+.intro__skip {
+  position: absolute; z-index: 5;
+  top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px;
+  min-height: 40px; padding: 0.4rem 1rem;
+  border-radius: 999px; border: 1px solid rgba(246, 241, 232, .55);
+  background: rgba(40, 10, 18, .35);
+  color: var(--cream);
+  font-size: 0.8rem; letter-spacing: 0.24em; text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* While the card lifts away, the page underneath is already there */
+html.intro-leaving .intro { pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro.is-ready .intro__tap-label { animation: none; }
+}
+
+.intro__tap:focus-visible { outline: none; }
+.intro__tap:focus-visible .intro__tap-label { outline: 2px solid var(--cream); outline-offset: 3px; }
+
+/* Once the card is showing, Skip sits on cream paper */
+.intro.is-open .intro__skip { color: var(--burgundy); border-color: rgba(94, 22, 38, .35); background: rgba(246, 241, 232, .6); transition: color .4s, background-color .4s, border-color .4s; }
+
+/* Navy wax seal where the flaps meet */
+.intro__seal {
+  position: absolute; left: 50%; top: 50%;
+  width: 96px; height: 96px; margin: -48px 0 0 -48px;
+  display: grid; place-items: center;
+  border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(170, 190, 230, .45), transparent 42%),
+    radial-gradient(circle at 50% 55%, #2e3d68, #18203a 72%);
+  box-shadow:
+    inset 0 -3px 6px rgba(5, 8, 20, .55),
+    inset 0 2px 3px rgba(190, 205, 240, .25),
+    0 3px 4px rgba(20, 5, 10, .5),
+    0 10px 18px rgba(20, 5, 10, .35);
+  pointer-events: none;
+}
+.intro__seal::before { /* pressed ring */
+  content: ''; position: absolute; inset: 11px; border-radius: 50%;
+  border: 1px solid rgba(214, 224, 245, .35);
+  box-shadow: inset 0 1px 2px rgba(5, 8, 20, .5), 0 1px 0 rgba(190, 205, 240, .2);
+}
+.intro__seal-mono {
+  position: relative; display: flex; align-items: center; gap: 6px;
+  font-size: 1.55rem; line-height: 1; color: #dfe6f5;
+  text-shadow: 0 -1px 0 rgba(5, 8, 20, .6), 0 1px 0 rgba(200, 215, 245, .25);
+}
+.intro__seal-mono b { font-weight: 500; }
+.intro__seal-mono i { width: 1px; height: 1.4rem; background: rgba(223, 230, 245, .6); }
+
+/* A navy double rule frames the inner card, like printed stationery */
+.intro__frame {
+  position: absolute; inset: 14px; pointer-events: none;
+  border: 1px solid rgba(36, 49, 82, .55);
+  outline: 1px solid rgba(36, 49, 82, .25); outline-offset: -6px;
+}
+
+/* ---------- Reply side of the card (RSVP) ---------- */
+.intro__card { perspective: 1200px; }
+.intro__copy { backface-visibility: hidden; }
+.intro__reply {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  padding: 3.25rem 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
+  backface-visibility: hidden;
+}
+.intro__reply-inner { margin: auto 0; width: 100%; max-width: 22rem; align-self: center; } /* centred, but scrolls when taller than the screen */
+.intro__reply-script { margin: 0; font-family: var(--script); font-size: 2.4rem; line-height: 1.2; color: var(--burgundy); }
+.intro__reply-title { color: var(--navy); outline: none; }
+.reply-side .rsvp__intro { margin: 0 auto 1.2rem; font-size: 1.02rem; }
+.reply-side .rsvp__card { box-shadow: 0 1px 2px rgba(40, 25, 25, .12), 0 10px 18px -14px rgba(40, 25, 25, .4); }
+.intro__enter { display: inline-block; margin-top: 1.1rem; min-height: 44px; color: var(--navy); font-size: 1.05rem; }
+
+/* Flap shapes before the script runs (it swaps in the rounded-tip versions),
+   so the first paint already shows the envelope's X. */
+.flap--top .flap__face { clip-path: polygon(100% 0%, 50% 57%, 0% 0%); }
+.flap--bottom .flap__face { clip-path: polygon(0% 100%, 50% 43%, 100% 100%); }
+.flap--left .flap__face { clip-path: polygon(0% -1%, 54% 50%, 0% 101%); }
+.flap--right .flap__face { clip-path: polygon(100% 101%, 46% 50%, 100% -1%); }

@@ -1,0 +1,10 @@
+/* All styles, linked from <head> so they block first paint. Importing them
+   from main.js made the page show as bare HTML until the script ran. */
+@import '@fontsource/cormorant-garamond/latin-400.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-400-italic.css';
+@import '@fontsource/pinyon-script/latin-400.css';
+@import './base.css';
+@import './intro.css';
+@import './site.css';

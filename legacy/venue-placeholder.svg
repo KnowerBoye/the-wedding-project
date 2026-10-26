@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Venue photo placeholder">
+  <rect width="800" height="600" fill="#20294a"/>
+  <rect x="16" y="16" width="768" height="568" fill="none" stroke="#c8a24c" stroke-opacity="0.5" stroke-width="1.5"/>
+  <g transform="translate(400 270)" fill="none" stroke="#c8a24c" stroke-opacity="0.7" stroke-width="3">
+    <path d="M-70 40 v-70 l70 -46 l70 46 v70 z"/>
+    <path d="M-30 40 v-44 h60 v44"/>
+  </g>
+  <text x="400" y="392" text-anchor="middle" font-family="-apple-system, Segoe UI, sans-serif" font-size="18" letter-spacing="3" fill="#c8a24c">ADD VENUE PHOTO</text>
+</svg>

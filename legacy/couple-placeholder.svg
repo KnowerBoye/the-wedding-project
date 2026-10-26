@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="Couple photo placeholder">
+  <rect width="600" height="800" fill="#4a111c"/>
+  <rect x="18" y="18" width="564" height="764" fill="none" stroke="#c8a24c" stroke-opacity="0.5" stroke-width="1.5"/>
+  <g transform="translate(300 352)" fill="none" stroke="#c8a24c" stroke-opacity="0.7" stroke-width="3">
+    <path d="M-66 -30 h24 l11 -15 h62 l11 15 h24 a13 13 0 0 1 13 13 v72 a13 13 0 0 1 -13 13 h-136 a13 13 0 0 1 -13 -13 v-72 a13 13 0 0 1 13 -13 z"/>
+    <circle cx="0" cy="30" r="28"/>
+  </g>
+  <text x="300" y="470" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#f3e9da">Robert &amp; Dora</text>
+  <text x="300" y="512" text-anchor="middle" font-family="-apple-system, Segoe UI, sans-serif" font-size="17" letter-spacing="3" fill="#c8a24c">ADD COUPLE PHOTO</text>
+</svg>

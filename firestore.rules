@@ -1,0 +1,60 @@
+rules_version = '2';
+
+// Guests can only write. Nobody can read through the client SDK, so phone
+// numbers and photo records are never exposed; the couple reads them in the
+// Firebase console (or a future admin page using the Admin SDK).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isId(id) {
+      return id is string && id.matches('^[A-Za-z0-9_-]{8,64}$');
+    }
+
+    // ---- RSVPs: one document per invite token (or per anonymous browser) ----
+    function validRsvp(d, id) {
+      return d.keys().hasAll(['name', 'phone', 'attending', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['name', 'phone', 'attending', 'token', 'createdAt', 'updatedAt'])
+        && d.name is string && d.name.size() >= 2 && d.name.size() <= 80
+        && d.phone is string && d.phone.matches('^[+]233[235][0-9]{8}$')
+        && d.attending is bool
+        && (!('token' in d) || (d.token is string && d.token == id))
+        && d.createdAt is timestamp && d.updatedAt is timestamp;
+    }
+
+    match /rsvps/{id} {
+      allow read, delete: if false;
+      allow create: if isId(id)
+        && validRsvp(request.resource.data, id)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if validRsvp(request.resource.data, id)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    // ---- Photo records: created once as 'pending'. The couple approves in the
+    // Firebase console by setting status to 'approved' (console edits bypass
+    // these rules), so clients can never update or read them. ----
+    match /photos/{id} {
+      allow read, update, delete: if false;
+      allow create: if isId(id)
+        && request.resource.data.keys().hasAll(['path', 'owner', 'contentType', 'size', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['path', 'owner', 'token', 'contentType', 'size', 'width', 'height', 'originalName', 'status', 'createdAt'])
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt == request.time
+        && isId(request.resource.data.owner)
+        && request.resource.data.path is string
+        && request.resource.data.path.matches('^uploads/' + request.resource.data.owner + '/[A-Za-z0-9-]{8,64}[.](jpg|jpeg|png|webp|heic|heif)$')
+        && request.resource.data.contentType.matches('^image/(jpeg|png|webp|heic|heif)$')
+        && request.resource.data.size is int && request.resource.data.size > 0 && request.resource.data.size <= 15 * 1024 * 1024
+        && (!('token' in request.resource.data) || request.resource.data.token == request.resource.data.owner)
+        && (!('width' in request.resource.data) || request.resource.data.width is int)
+        && (!('height' in request.resource.data) || request.resource.data.height is int)
+        && (!('originalName' in request.resource.data) || (request.resource.data.originalName is string && request.resource.data.originalName.size() <= 200));
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

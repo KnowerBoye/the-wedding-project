@@ -1,0 +1,129 @@
+{
+  "couple": {
+    "names": [
+      "Robert",
+      "Dora"
+    ],
+    "display": "Robert & Dora",
+    "hashtag": "#DeeRoy26"
+  },
+  "date": "2026-12-05",
+  "timezone": "Africa/Accra",
+  "theme": {
+    "colors": {
+      "primary": "burgundy",
+      "secondary": "navy blue"
+    }
+  },
+  "scripture": {
+    "text": "But besides all these things, clothe yourselves with love, for it is a perfect bond of union.",
+    "reference": "Colossians 3:14",
+    "_todo": "Placeholder chosen from the layout reference. Confirm or replace with the couple's scripture."
+  },
+  "parents": {
+    "intro": "With the blessing of Jehovah and the support of our parents",
+    "bride": [],
+    "groom": [],
+    "_todo": "Parents' names to be provided. The block stays hidden while both lists are empty."
+  },
+  "photos": {
+    "hero": "img/photos/couple-hero.webp",
+    "middle": "img/photos/couple-steps.webp",
+    "closing": "img/photos/couple-garden.webp",
+    "_todo": "Stock placeholders (Pexels). Replace with the couple's own photos, same filenames or new paths."
+  },
+  "venue": {
+    "name": "Kingdom Hall of Jehovah's Witnesses, Ofaakor",
+    "area": "Kasoa, Ofaakor",
+    "gps": {
+      "lat": 5.57938,
+      "lng": -0.450519
+    },
+    "mapUrl": "https://maps.app.goo.gl/ZXksJfZp2GnLf26b6",
+    "_note": "mapUrl is the couple's Google Maps pin (Kasoa Ofaakor Kingdom Hall); gps is read from it and used as a fallback."
+  },
+  "programme": [
+    {
+      "time": "10:45",
+      "title": "Arrival of guests"
+    },
+    {
+      "time": "10:55",
+      "title": "Arrival of couple"
+    },
+    {
+      "time": "11:00",
+      "title": "Chairman's interlude"
+    },
+    {
+      "time": "11:05",
+      "title": "Opening song (131) and prayer",
+      "songNumber": 131,
+      "lyricsUrl": null,
+      "_todo": "Lyrics or sheet-music link to be provided. Until then the chip searches jw.org for the song number."
+    },
+    {
+      "time": "11:10",
+      "title": "Wedding discourse"
+    },
+    {
+      "time": "11:40",
+      "title": "Closing song (132) and prayer",
+      "songNumber": 132,
+      "lyricsUrl": null,
+      "_todo": "Lyrics or sheet-music link to be provided. Until then the chip searches jw.org for the song number."
+    },
+    {
+      "time": "11:50",
+      "title": "Photography"
+    }
+  ],
+  "dressCode": {
+    "text": null,
+    "_todo": "Dress code to be provided. The block stays hidden while empty."
+  },
+  "photographyOrder": [
+    "Couple",
+    "Chairman and wife",
+    "Speaker and wife",
+    "Bride's parents",
+    "Groom's parents",
+    "Both parents",
+    "Bride's family",
+    "Groom's family",
+    "Bride's siblings",
+    "Groom's siblings",
+    "Bride's friends",
+    "Groom's friends",
+    "West Ofaakor",
+    "Gomoa Bewadze",
+    "Bridesmaids",
+    "Groomsmen"
+  ],
+  "announcements": [
+    "Excessive expressions of joy, such as shouting \"ayeforoo\", \"dondoo\" or other slogans, are not encouraged during the entire programme."
+  ],
+  "rsvp": {
+    "intro": "Kindly let us know whether you can join us. Your name and phone number are all we need, and only we can see them.",
+    "closesOn": null,
+    "_note": "Invite links only. Shown until the start of closesOn (YYYY-MM-DD, Accra time); null means the wedding day. Name, phone and attending go to Firestore `rsvps`, one per invite token."
+  },
+  "gifts": {
+    "message": "If you would like to give a gift, we are most grateful. There is a gift table section for that.",
+    "giftTable": true,
+    "digital": {
+      "provider": "paystack",
+      "enabled": false,
+      "_todo": "Paystack payment page link to be provided. Set url and enabled: true to activate the button.",
+      "url": null
+    }
+  },
+  "uploads": {
+    "intro": "Took a lovely photo on the day? Slip it in here. Photos stay private until we have seen them."
+  },
+  "closingRemarks": {
+    "heading": "With gratitude",
+    "text": "Mr & Mrs Dadzie express their profound gratitude to the Almighty Jehovah for this memorable day. To our parents, the congregation, families, friends and well-wishers, we say THANK YOU for your prayers, support and patience.",
+    "centrepiece": "THANK YOU"
+  }
+}

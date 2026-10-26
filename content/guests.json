@@ -1,0 +1,20 @@
+{
+  "_note": "Guest list for personal invite links. NOT shipped as one file: the build writes one small JSON per token to /i/<token>.json, so a guest only ever sees their own entry. Run `npm run tokens` to give new guests a token and print their links. These names are samples; replace with the real list.",
+  "guests": [
+    {
+      "name": "Ama Mensah",
+      "seats": 2,
+      "token": "X9kViEaAFoAm"
+    },
+    {
+      "name": "Kwame & Abena Owusu",
+      "seats": 2,
+      "token": "hIRbYjXxGo3j"
+    },
+    {
+      "name": "Esi Boateng",
+      "seats": 1,
+      "token": "RdhfK5QLVjso"
+    }
+  ]
+}

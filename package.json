@@ -1,0 +1,21 @@
+{
+  "name": "deeroy26",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "tokens": "node tools/tokens.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.4.5"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/pinyon-script": "^5.3.0",
+    "firebase": "^11.10.0",
+    "gsap": "^3.15.0"
+  }
+}

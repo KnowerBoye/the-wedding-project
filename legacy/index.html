@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Robert &amp; Dora · 05.12.2026</title>
+  <meta name="description" content="Robert & Dora are getting married — 5 December 2026, Kasoa, Ofaakor. #DeeRoy26" />
+  <meta name="theme-color" content="#4a111c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500&family=Tangerine:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Wedding content. content/wedding.json is the canonical source; this inline
+       copy mirrors it so the page renders when opened from disk (file://).
+       script.js prefers this block and falls back to fetching the file. -->
+  <script type="application/json" id="wedding-data">
+  {
+    "couple": { "names": ["Robert", "Dora"], "display": "Robert & Dora", "hashtag": "#DeeRoy26" },
+    "date": "2026-12-05",
+    "timezone": "Africa/Accra",
+    "theme": { "colors": { "primary": "burgundy", "secondary": "navy blue" } },
+    "venue": {
+      "name": "Kingdom Hall of Jehovah's Witnesses, Ofaakor",
+      "area": "Kasoa, Ofaakor",
+      "gps": "{'lat' : 5.579412258680796 , 'lng' : -0.4504491306022395}",
+      "_todo": "GPS coordinates to be provided"
+    },
+    "programme": [
+      { "time": "10:45", "title": "Arrival of guests" },
+      { "time": "10:55", "title": "Arrival of couple" },
+      { "time": "11:00", "title": "Chairman's interlude" },
+      { "time": "11:05", "title": "Opening song (131) and prayer", "songNumber": 131, "lyricsUrl": null, "_todo": "lyrics/sheet music link to be provided" },
+      { "time": "11:10", "title": "Wedding discourse" },
+      { "time": "11:40", "title": "Closing song (132) and prayer", "songNumber": 132, "lyricsUrl": null, "_todo": "lyrics/sheet music link to be provided" },
+      { "time": "11:50", "title": "Photography" }
+    ],
+    "photographyOrder": [
+      "Couple", "Chairman and wife", "Speaker and wife", "Bride's parents",
+      "Groom's parents", "Both parents", "Bride's family", "Groom's family",
+      "Bride's siblings", "Groom's siblings", "Bride's friends", "Groom's friends",
+      "West Ofaakor", "Gomoa Bewadze", "Bridesmaids", "Groomsmen"
+    ],
+    "announcements": [
+      "Excessive expressions of joy, such as shouting \"ayeforoo\", \"dondoo\" or other slogans, are not encouraged during the entire programme."
+    ],
+    "gifts": {
+      "message": "If you would like to give a gift, we are most grateful. There is a gift table section for that.",
+      "giftTable": true,
+      "digital": { "provider": "paystack", "enabled": false, "_todo": "Paystack cash-gift link/integration to be wired later" }
+    },
+    "closingRemarks": { "text": null, "_todo": "Closing remarks text to be provided" }
+  }
+  </script>
+</head>
+<body>
+  <!-- ============================================================
+       CINEMATIC INVITE — direct invites only (?to=Name)
+       ============================================================ -->
+  <div class="cinematic" id="cinematic" hidden>
+    <span class="floral floral--tl" aria-hidden="true"></span>
+    <span class="floral floral--tr" aria-hidden="true"></span>
+    <button class="cinematic__skip" id="cinematic-skip" type="button">Skip &#8594;</button>
+
+    <!-- Phase 1: the envelope -->
+    <div class="cinematic__phase" id="phase-envelope">
+      <p class="cinematic__to">An invitation for</p>
+      <p class="cinematic__name" id="invite-name">you</p>
+
+      <button class="envelope" id="envelope" type="button" aria-label="Open your invitation">
+        <img class="envelope__img" id="envelope-img" src="assets/envelope.png" alt="" hidden />
+        <!-- CSS fallback envelope (shown only if envelope.png is missing) -->
+        <span class="envelope__fallback" id="envelope-fallback">
+          <span class="envelope__body"></span>
+          <span class="envelope__flap"></span>
+          <span class="envelope__seal">R&amp;D</span>
+        </span>
+      </button>
+
+      <p class="cinematic__hint" id="envelope-hint">Tap to open</p>
+    </div>
+
+    <!-- Phase 2: the reveal -->
+    <div class="cinematic__phase cinematic__phase--reveal" id="phase-reveal" hidden>
+      <figure class="framed framed--arch reveal__photo">
+        <img src="assets/couple-main.jpg" data-fallback="assets/couple-placeholder.svg" alt="Robert &amp; Dora" />
+      </figure>
+      <p class="reveal__eyebrow">Together with their families</p>
+      <h2 class="reveal__names" id="reveal-names">Robert &amp; Dora</h2>
+      <p class="reveal__script">request the pleasure of your company</p>
+      <p class="reveal__date" id="reveal-date"></p>
+      <p class="reveal__greeting" id="reveal-greeting"></p>
+      <button class="btn btn--solid" id="reveal-enter" type="button">Open invitation</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN INVITE PAGE
+       ============================================================ -->
+  <div class="site" id="site">
+    <header class="nav" id="nav">
+      <a class="nav__brand" href="#top"><span class="nav__mono">R <span>&amp;</span> D</span></a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#details">Details</a>
+        <a href="#programme">Programme</a>
+        <a href="#photos">Photography</a>
+        <a href="#gifts">Gifts</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <span class="floral floral--tl" aria-hidden="true"></span>
+      <span class="floral floral--tr" aria-hidden="true"></span>
+      <span class="floral floral--bottom" aria-hidden="true"></span>
+      <div class="hero__inner">
+        <p class="hero__eyebrow">The wedding of</p>
+        <h1 class="hero__names" id="couple-names">Robert &amp; Dora</h1>
+        <p class="hero__script">We invite you to celebrate our special day</p>
+        <figure class="framed framed--arch hero__photo">
+          <img src="assets/couple-main.jpg" data-fallback="assets/couple-placeholder.svg" alt="Robert &amp; Dora" />
+        </figure>
+        <p class="hero__date" id="hero-date"></p>
+        <p class="hero__hashtag" id="hashtag"></p>
+      </div>
+      <a class="hero__scroll" href="#countdown" aria-label="Scroll down">&#8595;</a>
+    </section>
+
+    <!-- Countdown -->
+    <section class="section section--navy band" id="countdown-band">
+      <div class="container container--narrow band__inner">
+        <span class="ornament" aria-hidden="true"></span>
+        <p class="band__script">Counting down to</p>
+        <h2 class="band__title">Our Celebration</h2>
+        <div class="countdown" id="countdown" aria-label="Countdown to the wedding"></div>
+      </div>
+    </section>
+
+    <!-- Details / Venue -->
+    <section class="section" id="details">
+      <div class="container">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="section__title">The Day</h2>
+        <div class="details-grid">
+          <div class="detail-card">
+            <h3>When</h3>
+            <p class="detail-card__lead" id="detail-date"></p>
+            <p class="detail-card__muted" id="detail-time"></p>
+          </div>
+          <div class="detail-card">
+            <h3>Where</h3>
+            <p class="detail-card__lead" id="venue-name"></p>
+            <p class="detail-card__muted" id="venue-area"></p>
+            <a class="btn btn--small" id="venue-map" target="_blank" rel="noopener" hidden>Open in Maps</a>
+          </div>
+        </div>
+        <figure class="framed venue-photo" id="venue-photo">
+          <img src="assets/venue.jpg" data-fallback="assets/venue-placeholder.svg" alt="Venue" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- Programme -->
+    <section class="section section--navy" id="programme">
+      <div class="container container--narrow">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="section__title">Order of Programme</h2>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </section>
+
+    <!-- Photography order -->
+    <section class="section" id="photos">
+      <div class="container">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="section__title">Photography Order</h2>
+        <p class="section__intro">After the discourse, photographs will be taken in the following order. Please be ready when your group is called.</p>
+        <ol class="photo-order" id="photo-order"></ol>
+      </div>
+    </section>
+
+    <!-- Announcements -->
+    <section class="section section--navy" id="announcements" hidden>
+      <div class="container container--narrow">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="section__title">A Kind Note</h2>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </section>
+
+    <!-- Gifts -->
+    <section class="section" id="gifts">
+      <div class="container container--narrow">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="section__title">Gift the Couple</h2>
+        <p class="gifts__message" id="gifts-message"></p>
+        <div class="gifts__actions" id="gifts-actions"></div>
+      </div>
+    </section>
+
+    <!-- Closing remarks -->
+    <section class="section section--navy" id="closing" hidden>
+      <div class="container container--narrow">
+        <span class="ornament" aria-hidden="true"></span>
+        <h2 class="band__title">With Love</h2>
+        <p class="closing__text" id="closing-text"></p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="floral floral--bottom" aria-hidden="true"></span>
+      <p class="footer__names" id="footer-names">Robert &amp; Dora</p>
+      <p class="footer__hashtag" id="footer-hashtag"></p>
+      <p class="footer__meta" id="footer-meta"></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

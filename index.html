@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Robert &amp; Dora · 05.12.2026</title>
+  <meta name="description" content="Robert & Dora are getting married on 5 December 2026 in Kasoa, Ofaakor. #DeeRoy26" />
+  <meta name="theme-color" content="#d6d4d1" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%235e1626'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='26' fill='%23f6f1e8' text-anchor='middle'%3ER%7CD%3C/text%3E%3C/svg%3E" />
+  <script>
+    // Decide before first paint whether this visit is an invite, so the main
+    // page never flashes before the envelope. The envelope texture starts
+    // downloading here, ahead of the JS bundle.
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var t = q.get('i');
+      if (t === null) return;
+      // The opening plays on the first visit per invite only (or when replay=1).
+      try { if (q.get('replay') !== '1' && localStorage.getItem('deeroy26:opened:' + t)) return; } catch (e) { /* no storage: play it */ }
+      document.documentElement.classList.add('has-invite');
+      var l = document.createElement('link');
+      l.rel = 'preload'; l.as = 'image'; l.href = 'img/envelope-emboss.webp'; l.fetchPriority = 'high';
+      document.head.appendChild(l);
+      // If the bundle is slow or fails, Skip still works and the page is never held hostage.
+      var release = function () { if (!window.__introReady) document.documentElement.classList.remove('has-invite'); };
+      document.addEventListener('click', function (e) { if (e.target.id === 'intro-skip') release(); });
+      setTimeout(release, 10000);
+    })();
+  </script>
+  <link rel="preload" as="image" href="img/paper-cream.webp" />
+  <link rel="stylesheet" href="/src/styles/index.css" />
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#site">Skip to the wedding details</a>
+
+  <!-- ========== Invitation opening (invite links only) ========== -->
+  <div class="intro" id="intro" aria-label="Your invitation" role="dialog" aria-modal="true">
+    <!-- <button class="intro__skip" id="intro-skip" type="button">Skip</button> -->
+
+    <div class="intro__stage" id="intro-stage">
+      <!-- Inner card, revealed when the flaps open -->
+      <div class="intro__card" id="intro-card">
+        <i class="intro__frame" aria-hidden="true"></i>
+        <div class="intro__card-shade" id="intro-shade"></div>
+        <div class="intro__copy" id="intro-copy">
+          <p class="intro__dear" id="intro-dear">Dear guest,</p>
+          <h1 class="intro__headline" aria-label="You're cordially invited">
+            <span class="intro__caps" data-split>You’re</span>
+            <span class="intro__script" data-split>cordially</span>
+            <span class="intro__caps" data-split>Invited</span>
+          </h1>
+          <p class="intro__to" id="intro-to">
+            to the wedding of<br />
+            <span class="intro__names" id="intro-names">Robert &amp; Dora</span>
+            <span class="intro__date" id="intro-date">Saturday · 5 December 2026</span>
+          </p>
+          <button class="pill pill--burgundy intro__continue" id="intro-continue" type="button">Continue</button>
+        </div>
+
+        <!-- The reply side of the card: RSVP is part of the invitation -->
+        <div class="intro__reply reply-side" id="intro-reply" hidden>
+          <div class="intro__reply-inner">
+            <p class="intro__reply-script">Kindly reply</p>
+            <h2 class="caps-heading intro__reply-title" id="intro-reply-title" tabindex="-1">RSVP</h2>
+            <div class="intro__rsvp-slot" id="intro-rsvp-slot"></div>
+            <button class="linkish intro__enter" id="intro-enter" type="button">Enter the celebration →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Four flaps: z-order bottom to top is top, bottom, left, right -->
+      <div class="flap flap--top" data-flap="top"><div class="flap__side"><div class="flap__face"><i class="flap__light"></i></div></div><div class="flap__side flap__side--back"><div class="flap__back"></div></div></div>
+      <div class="flap flap--bottom" data-flap="bottom"><div class="flap__side"><div class="flap__face"><i class="flap__light"></i></div></div><div class="flap__side flap__side--back"><div class="flap__back"></div></div></div>
+      <div class="flap flap--left" data-flap="left"><div class="flap__side"><div class="flap__face"><i class="flap__light"></i></div></div><div class="flap__side flap__side--back"><div class="flap__back"></div></div></div>
+      <div class="flap flap--right" data-flap="right"><div class="flap__side"><div class="flap__face"><i class="flap__light"></i></div></div><div class="flap__side flap__side--back"><div class="flap__back"></div></div></div>
+
+      <div class="intro__seal" id="intro-seal" aria-hidden="true">
+        <span class="intro__seal-mono"><b id="seal-1">R</b><i></i><b id="seal-2">D</b></span>
+      </div>
+
+      <div class="intro__sheen" id="intro-sheen"></div>
+    </div>
+
+    <button class="intro__tap" id="intro-tap" type="button" aria-label="Open your invitation" disabled>
+      <span class="intro__for" id="intro-for"></span>
+      <span class="intro__tap-label" id="intro-tap-label">Preparing your invitation…</span>
+    </button>
+  </div>
+
+  <!-- ========== Main site: one long sheet of paper ========== -->
+  <main class="site" id="site" tabindex="-1">
+    <div class="column">
+
+      <!-- Hero band: the envelope with its flap down -->
+      <header class="band band--hero sheet" data-enter="hero">
+        <div class="hero__flap" aria-hidden="true"><div class="hero__flap-face"></div></div>
+        <h1 class="hero__names">
+          <span class="hero__name" id="hero-name-1">Robert</span>
+          <span class="hero__amp">&amp;</span>
+          <span class="hero__name" id="hero-name-2">Dora</span>
+        </h1>
+        <p class="hero__date" id="hero-date">05 · 12 · 2026</p>
+      </header>
+      <div class="seam seam--a" aria-hidden="true"></div>
+
+      <!-- Greeting, scripture, monogram -->
+      <section class="paper sheet" data-enter="lay" aria-labelledby="h-married">
+        <p class="greeting" id="greeting">Dear friends,</p>
+        <blockquote class="scripture" id="scripture" hidden>
+          <p id="scripture-text"></p>
+          <cite id="scripture-ref"></cite>
+        </blockquote>
+        <div class="monogram" aria-label="Robert and Dora">
+          <span id="mono-1">R</span><i></i><span id="mono-2">D</span>
+        </div>
+        <h2 class="caps-heading" id="h-married">We’re getting married</h2>
+      </section>
+
+      <!-- RSVP: invite links only, closes on the wedding day. The form itself never sits in the page:
+           it lives on a full-screen reply card (the invitation's reply side, or the sheet below). -->
+      <section class="paper paper--tight sheet rsvp" id="rsvp" data-enter="rise" aria-labelledby="h-rsvp" hidden>
+        <span class="icon" data-icon="envelope"></span>
+        <p class="script-accent">Kindly reply</p>
+        <h2 class="visually-hidden" id="h-rsvp">RSVP</h2>
+        <p class="rsvp__prompt" id="rsvp-prompt">Let us know whether you can join us.</p>
+        <button class="pill pill--burgundy" id="rsvp-open" type="button" aria-haspopup="dialog">RSVP</button>
+        <div id="rsvp-home" hidden>
+        <div class="rsvp__body" id="rsvp-body">
+        <p class="rsvp__intro" id="rsvp-intro"></p>
+        <form class="rsvp__card" id="rsvp-form" novalidate hidden>
+          <label class="field">
+            <span class="field__label">Your name</span>
+            <input class="field__input" id="rsvp-name" name="name" type="text" autocomplete="name" maxlength="80" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Phone number</span>
+            <input class="field__input" id="rsvp-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="024 123 4567" maxlength="20" required aria-describedby="rsvp-phone-hint" />
+            <span class="field__hint" id="rsvp-phone-hint">Ghana number, e.g. 024 123 4567 or +233 24 123 4567</span>
+          </label>
+          <fieldset class="choice" id="rsvp-attending">
+            <legend class="field__label">Will you attend?</legend>
+            <label class="choice__option"><input type="radio" name="attending" value="yes" required /><span>Yes, joyfully</span></label>
+            <label class="choice__option"><input type="radio" name="attending" value="no" /><span>Regretfully, no</span></label>
+          </fieldset>
+          <p class="form-status" id="rsvp-status" role="status" aria-live="polite"></p>
+          <button class="pill pill--burgundy" id="rsvp-submit" type="submit">Send RSVP</button>
+        </form>
+        <p class="soon" id="rsvp-soon" hidden>RSVP opens soon. Please check back here.</p>
+        </div>
+        </div>
+      </section>
+
+      <figure class="print sheet" data-enter="deal">
+        <img id="photo-hero" alt="Placeholder photo of a couple" width="800" height="1200" decoding="async" />
+      </figure>
+
+      <section class="paper paper--tight sheet" id="parents" data-enter="lay" hidden>
+        <p class="parents__intro" id="parents-intro"></p>
+        <div class="parents__lists">
+          <ul id="parents-bride"></ul>
+          <span class="parents__amp">&amp;</span>
+          <ul id="parents-groom"></ul>
+        </div>
+      </section>
+
+      <!-- Date + countdown band -->
+      <div class="seam seam--b seam--onto-band" aria-hidden="true"></div>
+      <section class="band band--countdown sheet" data-enter="unfold" aria-labelledby="h-countdown">
+        <div class="datebar">
+          <span class="datebar__side" id="date-weekday">Saturday</span>
+          <span class="datebar__day" id="date-day">05</span>
+          <span class="datebar__side" id="date-monthyear">December 2026</span>
+        </div>
+        <h2 class="caps-heading caps-heading--light" id="h-countdown">Counting down</h2>
+        <div class="countdown" id="countdown" role="timer" aria-live="off"></div>
+      </section>
+      <div class="seam seam--a seam--flip" aria-hidden="true"></div>
+
+      <figure class="print print--tilt-r sheet" data-enter="deal">
+        <img id="photo-middle" alt="Placeholder photo of a couple" width="800" height="1200" loading="lazy" decoding="async" />
+      </figure>
+
+      <!-- Venue -->
+      <section class="paper sheet" data-enter="rise" aria-labelledby="h-venue">
+        <span class="icon" data-icon="hall"></span>
+        <p class="venue__time" id="venue-time">10:45</p>
+        <h2 class="caps-heading" id="h-venue">The ceremony</h2>
+        <p class="venue__name" id="venue-name"></p>
+        <p class="venue__area" id="venue-area"></p>
+        <a class="pill pill--burgundy" id="venue-map" target="_blank" rel="noopener">View location</a>
+
+      </section>
+
+      <!-- Programme -->
+      <section class="paper sheet" data-enter="timeline" aria-labelledby="h-programme">
+        <h2 class="caps-heading" id="h-programme">Programme</h2>
+        <ol class="timeline" id="timeline"></ol>
+      </section>
+
+      <section class="paper paper--tight sheet" id="dress" data-enter="lay" hidden aria-labelledby="h-dress">
+        <span class="icon" data-icon="dress"></span>
+        <h2 class="caps-heading" id="h-dress">Dress code</h2>
+        <p id="dress-text"></p>
+      </section>
+
+      <!-- Photography order: the navy band -->
+      <div class="seam seam--b seam--onto-band" aria-hidden="true"></div>
+      <section class="band band--navy sheet" data-enter="index" aria-labelledby="h-photos">
+        <span class="icon icon--light" data-icon="camera"></span>
+        <h2 class="caps-heading caps-heading--light" id="h-photos">Photography order</h2>
+        <p class="fineprint">After the ceremony, please gather when your group is called.</p>
+        <ol class="photo-order" id="photo-order"></ol>
+      </section>
+      <div class="seam seam--a" aria-hidden="true"></div>
+
+      <!-- Announcement: a pinned note -->
+      <section class="paper paper--tight sheet" id="announcements" data-enter="pin" hidden aria-labelledby="h-note">
+        <div class="note">
+          <i class="note__tape" aria-hidden="true"></i>
+          <h2 class="caps-heading caps-heading--small" id="h-note">A gentle note</h2>
+          <ul class="note__list" id="notes"></ul>
+        </div>
+      </section>
+
+
+      <!-- Gifts band -->
+      <div class="seam seam--b seam--onto-band" aria-hidden="true"></div>
+      <section class="band band--gifts sheet" data-enter="unfold-up" aria-labelledby="h-gifts">
+        <span class="icon icon--light" data-icon="gift"></span>
+        <h2 class="caps-heading caps-heading--light" id="h-gifts">Gifts</h2>
+        <p class="gifts__message" id="gifts-message"></p>
+        <p class="gifts__table" id="gifts-table" hidden><span class="icon icon--light icon--sm" data-icon="envelope"></span> Gift table at the venue</p>
+        <!-- <button class="pill pill--outline-light" id="gifts-digital" type="button" disabled>Cash gift · coming soon</button> -->
+        <a class="pill pill--outline-light" id="gifts-digital-link" target="_blank" rel="noopener" >Send a cash gift</a>
+
+        <p class="closing__lead">We look forward to celebrating with you</p>
+      </section>
+      <div class="seam seam--a seam--flip" aria-hidden="true"></div>
+
+      <!-- Guest photos: a paper pocket to slip photos into -->
+      <section class="paper sheet uploads" id="uploads" data-enter="pocket" aria-labelledby="h-uploads">
+        <p class="script-accent">Share the day</p>
+        <h2 class="caps-heading" id="h-uploads">Your photos</h2>
+        <p class="uploads__intro" id="uploads-intro"></p>
+        <div class="pocket" id="uploads-ready" hidden>
+          <input class="pocket__input" id="uploads-input" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif" />
+          <label class="pocket__label" for="uploads-input">
+            <span class="pocket__flap" aria-hidden="true"></span>
+            <span class="icon icon--navy" data-icon="camera"></span>
+            <span class="pocket__cta">Add photos</span>
+            <span class="pocket__fine">JPEG, PNG, WebP or HEIC · up to 15 MB each</span>
+          </label>
+        </div>
+        <ul class="upload-list" id="uploads-list" aria-live="polite"></ul>
+        <p class="soon" id="uploads-soon" hidden>Photo sharing opens soon.</p>
+      </section>
+
+      <!-- Appreciation: the closing card -->
+      <section class="paper sheet appreciation" id="appreciation" data-enter="card" hidden aria-labelledby="h-thanks">
+        <div class="thanks-card">
+          <i class="thanks-card__frame" aria-hidden="true"></i>
+          <p class="script-accent" id="thanks-heading">With gratitude</p>
+          <p class="thanks-card__text" id="thanks-before"></p>
+          <h2 class="thanks-card__centre" id="h-thanks"></h2>
+          <p class="thanks-card__text" id="thanks-after"></p>
+          <div class="monogram monogram--small" aria-hidden="true"><span id="thanks-mono-1">R</span><i></i><span id="thanks-mono-2">D</span></div>
+        </div>
+      </section>
+
+      <figure class="print print--tilt-l sheet" data-enter="deal">
+        <img id="photo-closing" alt="Placeholder photo of a couple" width="800" height="1000" loading="lazy" decoding="async" />
+      </figure>
+
+      <footer class="paper paper--tight footer sheet" data-enter="rise">
+        <div class="monogram monogram--small" aria-hidden="true"><span id="foot-mono-1">R</span><i></i><span id="foot-mono-2">D</span></div>
+        <p class="footer__tag" id="footer-tag">#DeeRoy26</p>
+        <a class="linkish footer__replay" id="replay" hidden>Replay invitation</a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Reply card for the RSVP, opened from the page -->
+  <div class="reply-sheet" id="reply-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-reply-title" hidden>
+    <i class="intro__frame" aria-hidden="true"></i>
+    <button class="reply-sheet__close" id="reply-sheet-close" type="button" aria-label="Close">Close</button>
+    <div class="reply-side reply-sheet__scroll">
+      <div class="intro__reply-inner">
+        <p class="intro__reply-script">Kindly reply</p>
+        <h2 class="caps-heading intro__reply-title" id="sheet-reply-title" tabindex="-1">RSVP</h2>
+        <div id="sheet-rsvp-slot"></div>
+        <button class="linkish intro__enter" id="reply-sheet-done" type="button">Back to the invitation</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
